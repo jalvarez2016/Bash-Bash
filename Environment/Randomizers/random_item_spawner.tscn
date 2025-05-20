@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbrq67ppjp311"]
+
+[ext_resource type="Script" uid="uid://db3em7o8doscb" path="res://Environment/Randomizers/random_item_spawner.gd" id="1_7woga"]
+
+[node name="RandomItemSpawner" type="Node3D"]
+script = ExtResource("1_7woga")
+item = "res://Environment/Attachments/base.tscn"

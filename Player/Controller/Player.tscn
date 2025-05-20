@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=3 uid="uid://clh46a28l5d6f"]
+
+[ext_resource type="Script" uid="uid://dkr261g6uqrfr" path="res://Player/Controller/player.gd" id="1_4a7vj"]
+[ext_resource type="Script" uid="uid://b6gd3mddpm4uv" path="res://Player/Controller/camera.gd" id="2_i2o43"]
+[ext_resource type="Script" uid="uid://b522q58g1bav4" path="res://Player/Controller/shield_controller.gd" id="2_pyy65"]
+[ext_resource type="Script" uid="uid://dr2iycpf0171e" path="res://Player/Controller/playerTarget.gd" id="3_fp8p3"]
+[ext_resource type="Script" uid="uid://cai7xtthcnai2" path="res://Player/Controller/healthManager.gd" id="5_xya77"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qx07r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4a7vj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pyy65"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_i2o43"]
+
+[node name="CharacterBody3D" type="Node3D"]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." node_paths=PackedStringArray("healthManager", "spring_arm", "playerMain", "chargeUI", "launchTarget", "shieldController") groups=["player"]]
+contact_monitor = true
+max_contacts_reported = 50
+script = ExtResource("1_4a7vj")
+healthManager = NodePath("../HealthManager")
+spring_arm = NodePath("../SpringArm3D")
+playerMain = NodePath("..")
+sprintMultiplier = 2.5
+chargeUI = NodePath("../ProgressBar")
+launchTarget = NodePath("../SpringArm3D/CameraHolder/Camera3D/RayCast3D/Marker3D")
+shieldController = NodePath("../ShieldController")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_qx07r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_4a7vj")
+skeleton = NodePath("../../..")
+
+[node name="Area3D" type="Area3D" parent="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Area3D"]
+shape = SubResource("SphereShape3D_pyy65")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="." node_paths=PackedStringArray("playerBody")]
+spring_length = 20.0
+margin = 1.0
+script = ExtResource("2_i2o43")
+playerBody = NodePath("../RigidBody3D")
+
+[node name="CameraHolder" type="Node3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D/CameraHolder"]
+
+[node name="RayCast3D" type="RayCast3D" parent="SpringArm3D/CameraHolder/Camera3D" node_paths=PackedStringArray("debugObject", "resetPosition")]
+transform = Transform3D(-1, 0, 8.74228e-08, 2.26267e-08, 0.965926, 0.258819, -8.44439e-08, 0.258819, -0.965926, 0, 2, 0)
+target_position = Vector3(0, 0, 50)
+script = ExtResource("3_fp8p3")
+debugObject = NodePath("MeshInstance3D")
+resetPosition = NodePath("Marker3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D/CameraHolder/Camera3D/RayCast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+mesh = SubResource("SphereMesh_i2o43")
+
+[node name="Marker3D" type="Marker3D" parent="SpringArm3D/CameraHolder/Camera3D/RayCast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = 751.0
+offset_top = 431.0
+offset_right = 983.0
+offset_bottom = 458.0
+rotation = -1.57079
+max_value = 80.0
+show_percentage = false
+
+[node name="HealthManager" type="Node3D" parent="." node_paths=PackedStringArray("healthBar")]
+script = ExtResource("5_xya77")
+healthBar = NodePath("HealthBar")
+
+[node name="HealthBar" type="ProgressBar" parent="HealthManager"]
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 356.0
+offset_bottom = 51.0
+value = 100.0
+
+[node name="ShieldController" type="Node3D" parent="." node_paths=PackedStringArray("playerBody")]
+script = ExtResource("2_pyy65")
+playerBody = NodePath("../RigidBody3D")
+
+[connection signal="body_shape_entered" from="RigidBody3D" to="RigidBody3D" method="_on_body_shape_entered"]
+[connection signal="body_entered" from="RigidBody3D/Area3D" to="ShieldController" method="_on_area_3d_body_entered"]
