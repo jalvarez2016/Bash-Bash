@@ -10,6 +10,7 @@ size = Vector3(0.8, 1.5, 2)
 size = Vector3(0.8, 1.5, 2)
 
 [node name="ShieldAttachment" type="RigidBody3D" node_paths=PackedStringArray("collider") groups=["attachment"]]
+collision_layer = 2
 script = ExtResource("1_kf4sx")
 collider = NodePath("CollisionShape3D")
 
@@ -23,6 +24,7 @@ skeleton = NodePath("../..")
 
 [node name="Area3D" type="Area3D" parent="CollisionShape3D"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionShape3D/Area3D"]
 shape = SubResource("BoxShape3D_ahehf")

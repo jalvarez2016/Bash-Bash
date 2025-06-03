@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt8twimc6ami0"]
+
+[ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="1_8xnjk"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_foh8x"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="EyeballEnemy" type="Node3D"]
+
+[node name="BaseEnemy" parent="." instance=ExtResource("1_8xnjk")]
+
+[node name="Sprite3D" parent="BaseEnemy" index="2"]
+texture = SubResource("ViewportTexture_foh8x")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, 20)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[editable path="BaseEnemy"]

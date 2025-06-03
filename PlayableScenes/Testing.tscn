@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cnu00jud85ouo"]
+[gd_scene load_steps=10 format=3 uid="uid://cnu00jud85ouo"]
 
 [ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_xnys2"]
 [ext_resource type="PackedScene" uid="uid://sfyqwrvgtb20" path="res://Environment/wall.tscn" id="2_il20l"]
-[ext_resource type="PackedScene" uid="uid://6614agfkyt2e" path="res://Environment/Attachments/base.tscn" id="3_1rbpo"]
 [ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="4_a45pm"]
 [ext_resource type="PackedScene" uid="uid://dbrq67ppjp311" path="res://Environment/Randomizers/random_item_spawner.tscn" id="5_iutbq"]
 
@@ -48,21 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248367, 0.5, 1.25542)
 
 [node name="Node3D" parent="." instance=ExtResource("2_il20l")]
 transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, -8.56766, 10, 1.63052)
-
-[node name="Node3D2" parent="." instance=ExtResource("3_1rbpo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
-
-[node name="Node3D3" parent="." instance=ExtResource("3_1rbpo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, -8)
-
-[node name="Node3D4" parent="." instance=ExtResource("3_1rbpo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -2)
-
-[node name="Node3D5" parent="." instance=ExtResource("3_1rbpo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, -9)
-
-[node name="Node3D6" parent="." instance=ExtResource("3_1rbpo")]
-transform = Transform3D(0.500244, -0.560874, -0.65968, 0.543875, 0.796345, -0.264642, 0.673763, -0.226398, 0.703411, 0, 3, 1)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("4_a45pm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 0)

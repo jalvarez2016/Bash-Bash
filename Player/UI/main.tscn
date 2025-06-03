@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvw0tposbwj3y"]
+
+[ext_resource type="Script" uid="uid://cgvwaqxlxoruh" path="res://Player/UI/playerControls.gd" id="1_h01ay"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("keysContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_h01ay")
+keysContainer = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_bottom = 138.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
