@@ -1,14 +1,27 @@
 extends Node3D
 @export var maxHealth: float = 100.0
 @export var health: float = 100.0
-@export var healthBar: MeshInstance3D
+@export var healthBar: TextureProgressBar
+@export var attackManager: Node3D
+
+func _ready() -> void:
+	healthBar.max_value = maxHealth
+	healthBar.value = health
 
 func damage(damageAmount: float):
 	if health - damageAmount <= 0:
 		health = 0
 		print('enemy dead')
+		owner.queue_free()
 	else:
 		health -= damageAmount
-	var healthPercentage: float = health/maxHealth
-	var healthShader: ShaderMaterial = healthBar.get_surface_override_material(0)
-	healthShader.set_shader_parameter('health', healthPercentage)
+	healthBar.value = health
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body.is_in_group("player"):
+		print('player detected by enemy
+		')
+		if !attackManager:
+			return
+		attackManager.action()

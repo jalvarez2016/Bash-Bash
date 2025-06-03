@@ -1,48 +1,62 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxadduf7ncnn7"]
+[gd_scene load_steps=7 format=3 uid="uid://dxadduf7ncnn7"]
 
 [ext_resource type="Script" uid="uid://bpi0m1b10ror5" path="res://Enemy/enemyController.gd" id="1_qsll7"]
-[ext_resource type="Shader" uid="uid://dqv742a7r8sj1" path="res://Enemy/healthbar.gdshader" id="1_rfmx6"]
+[ext_resource type="Texture2D" uid="uid://dj8mwqxeyah36" path="res://greenHealthBar.png" id="2_qsll7"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5oouc"]
-radius = 1.0
-height = 4.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_qsll7"]
+radius = 3.0
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hjege"]
-radius = 1.0
+[sub_resource type="SphereMesh" id="SphereMesh_qsll7"]
+radius = 2.0
 height = 4.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_jv620"]
 radius = 5.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_qsll7"]
-size = Vector2(5, 0.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6ij1"]
-render_priority = 0
-shader = ExtResource("1_rfmx6")
-shader_parameter/use_billboard = false
-shader_parameter/color = Color(1, 0.341176, 0.337255, 1)
-shader_parameter/background_color = Color(0, 0, 0, 1)
-shader_parameter/health = 1.0
+[sub_resource type="ViewportTexture" id="ViewportTexture_rfmx6"]
+viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="BaseEnemy" type="Node3D"]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("healthBar") groups=["enemy"]]
+collision_layer = 4
 script = ExtResource("1_qsll7")
-healthBar = NodePath("../MeshInstance3D")
+healthBar = NodePath("../Sprite3D/SubViewport/TextureProgressBar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_5oouc")
+shape = SubResource("SphereShape3D_qsll7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_hjege")
+mesh = SubResource("SphereMesh_qsll7")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_jv620")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 5, 0)
-mesh = SubResource("PlaneMesh_qsll7")
-surface_material_override/0 = SubResource("ShaderMaterial_r6ij1")
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_rfmx6")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 512)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Sprite3D/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -13.0
+offset_right = 100.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 80.0
+texture_progress = ExtResource("2_qsll7")
+
+[connection signal="body_entered" from="Area3D" to="CharacterBody3D" method="_on_area_3d_body_entered"]
