@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cnu00jud85ouo"]
+[gd_scene load_steps=11 format=3 uid="uid://cnu00jud85ouo"]
 
 [ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_xnys2"]
 [ext_resource type="PackedScene" uid="uid://sfyqwrvgtb20" path="res://Environment/wall.tscn" id="2_il20l"]
 [ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="4_a45pm"]
 [ext_resource type="PackedScene" uid="uid://dbrq67ppjp311" path="res://Environment/Randomizers/random_item_spawner.tscn" id="5_iutbq"]
+[ext_resource type="PackedScene" uid="uid://bt8twimc6ami0" path="res://Enemy/Enemies/Eyeball/eyeball_enemy.tscn" id="5_pd50j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_34qg5"]
 sky_top_color = Color(0.619608, 0.356863, 0.54902, 1)
@@ -53,3 +54,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 0)
 
 [node name="RandomItemSpawner" parent="." instance=ExtResource("5_iutbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="EyeballEnemy" parent="." instance=ExtResource("5_pd50j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -21)
