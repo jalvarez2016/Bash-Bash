@@ -12,4 +12,5 @@ func _on_lifespan_timeout() -> void:
 	pass # Replace with function body.
 
 func damage(damageAmount: float):
+	print('damaged', damageAmount)
 	queue_free()

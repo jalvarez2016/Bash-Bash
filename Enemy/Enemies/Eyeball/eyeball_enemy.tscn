@@ -27,6 +27,9 @@ bulletSpawnPoint = NodePath("BaseEnemy/BulletSpawnPoint")
 
 [node name="BaseEnemy" parent="." instance=ExtResource("1_8xnjk")]
 
+[node name="CharacterBody3D" parent="BaseEnemy" index="0" node_paths=PackedStringArray("variantOwner")]
+variantOwner = NodePath("../..")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/MeshInstance3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.85022)
 mesh = SubResource("SphereMesh_fwud0")

@@ -18,6 +18,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		body.queue_free()
 	if body.is_in_group('enemy'):
 		playerBody.damage(10)
+		
 
 
 func _process(_delta: float) -> void:

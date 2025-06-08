@@ -25,6 +25,7 @@ skeleton = NodePath("../..")
 [node name="Area3D" type="Area3D" parent="CollisionShape3D"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 collision_layer = 2
+collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionShape3D/Area3D"]
 shape = SubResource("BoxShape3D_ahehf")
