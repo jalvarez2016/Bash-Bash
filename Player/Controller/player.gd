@@ -38,6 +38,8 @@ func movement(_delta: float) -> void:
 	else:
 		constant_force = Vector3.ZERO
 		angular_velocity = Vector3.ZERO
+	if Input.is_action_just_pressed("jump"):
+		print('trying to jump')
 
 
 func launch(delta: float) -> void:

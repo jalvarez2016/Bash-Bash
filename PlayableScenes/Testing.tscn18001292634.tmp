@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://cnu00jud85ouo"]
+
+[ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_xnys2"]
+[ext_resource type="PackedScene" uid="uid://sfyqwrvgtb20" path="res://Environment/wall.tscn" id="2_il20l"]
+[ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="4_a45pm"]
+[ext_resource type="PackedScene" uid="uid://dbrq67ppjp311" path="res://Environment/Randomizers/random_item_spawner.tscn" id="5_iutbq"]
+[ext_resource type="PackedScene" uid="uid://bt8twimc6ami0" path="res://Enemy/Enemies/Eyeball/eyeball_enemy.tscn" id="5_pd50j"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_34qg5"]
+sky_top_color = Color(0.619608, 0.356863, 0.54902, 1)
+sky_horizon_color = Color(0.93657, 0.557673, 0.409331, 1)
+ground_horizon_color = Color(0.937255, 0.556863, 0.407843, 1)
+
+[sub_resource type="Sky" id="Sky_xnys2"]
+sky_material = SubResource("ProceduralSkyMaterial_34qg5")
+
+[sub_resource type="Environment" id="Environment_il20l"]
+background_mode = 2
+sky = SubResource("Sky_xnys2")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_34qg5"]
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_34qg5"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_il20l")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_34qg5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_34qg5")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_xnys2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248367, 0.5, 1.25542)
+
+[node name="Node3D" parent="." instance=ExtResource("2_il20l")]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, -8.56766, 10, 1.63052)
+
+[node name="BaseEnemy" parent="." instance=ExtResource("4_a45pm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 0)
+
+[node name="RandomItemSpawner" parent="." instance=ExtResource("5_iutbq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="EyeballEnemy" parent="." instance=ExtResource("5_pd50j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -21)
