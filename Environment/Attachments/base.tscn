@@ -9,10 +9,11 @@ size = Vector3(0.8, 1.5, 2)
 [sub_resource type="BoxMesh" id="BoxMesh_skcws"]
 size = Vector3(0.8, 1.5, 2)
 
-[node name="ShieldAttachment" type="RigidBody3D" node_paths=PackedStringArray("collider") groups=["attachment"]]
+[node name="ShieldAttachment" type="RigidBody3D" node_paths=PackedStringArray("collider", "shieldPart") groups=["attachment"]]
 collision_layer = 2
 script = ExtResource("1_kf4sx")
 collider = NodePath("CollisionShape3D")
+shieldPart = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ahehf")

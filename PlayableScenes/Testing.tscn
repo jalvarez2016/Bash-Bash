@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cnu00jud85ouo"]
+[gd_scene load_steps=13 format=3 uid="uid://cnu00jud85ouo"]
 
+[ext_resource type="Script" uid="uid://cldwudaw2411s" path="res://PlayableScenes/WorldManager.gd" id="1_pd50j"]
 [ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_xnys2"]
 [ext_resource type="PackedScene" uid="uid://sfyqwrvgtb20" path="res://Environment/wall.tscn" id="2_il20l"]
 [ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="4_a45pm"]
@@ -26,7 +27,12 @@ size = Vector2(100, 100)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_34qg5"]
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_iutbq"]
+size = Vector3(800, 10, 800)
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("resetPosition")]
+script = ExtResource("1_pd50j")
+resetPosition = NodePath("ResetPos")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_il20l")
@@ -57,3 +63,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="EyeballEnemy" parent="." instance=ExtResource("5_pd50j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -21)
+
+[node name="ResetPos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+shape = SubResource("BoxShape3D_iutbq")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

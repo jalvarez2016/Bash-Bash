@@ -11,6 +11,7 @@ var bullet: Resource = preload("res://Enemy/Enemies/Eyeball/bullet.tscn")
 
 var player: Node3D
 var angularAcceleration : float = 2.2
+var playerDetectionPercentage : float = 0.0
 var canShoot: bool = true
 
 
@@ -34,7 +35,12 @@ func _process(delta: float) -> void:
 
 func attack_logic(delta: float):
 	if !player:
+		if playerDetectionPercentage > 0:
+			playerDetectionPercentage = lerp(playerDetectionPercentage, 0.0, delta)
+		else:
+			playerDetectionPercentage = 0
 		return
+
 	var distance: Vector3 = global_position - player.global_position
 	var direction: Vector3 = - (global_position - player.global_position).normalized()
 	var desiredXAngle = atan2(direction.x, direction.z) + PI
@@ -50,6 +56,11 @@ func attack_logic(delta: float):
 	
 	if enemyDetection.is_colliding():
 		if !canShoot:
+			return
+			
+		if playerDetectionPercentage < 100.0:
+			playerDetectionPercentage = lerp(playerDetectionPercentage, 110.0, delta * .5)
+			print(playerDetectionPercentage)
 			return
 		if enemyDetection.get_collider().is_in_group('player'):
 			var targetPos = enemyDetection.get_collision_point()

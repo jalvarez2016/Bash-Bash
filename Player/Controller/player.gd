@@ -51,7 +51,7 @@ func launch(delta: float) -> void:
 	elif Input.is_action_just_released("launch charge"):
 		freeze = false
 		var launchDirection = (launchTarget.global_position - global_position).normalized()
-		apply_central_impulse(launchDirection * chargeAmount)
+		apply_central_impulse(launchDirection * chargeAmount * mass)
 		
 		state = playerStates.MOVING
 		chargeAmount = 0.0

@@ -47,7 +47,7 @@ shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_foh8x"]
-viewport_path = NodePath("BaseEnemy/Sprite3D/SubViewport")
+viewport_path = NodePath("Sprite3D/SubViewport")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_foh8x"]
 radius = 20.0
