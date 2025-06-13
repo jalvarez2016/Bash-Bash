@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bt8twimc6ami0"]
+[gd_scene load_steps=19 format=3 uid="uid://bt8twimc6ami0"]
 
 [ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="1_8xnjk"]
 [ext_resource type="Script" uid="uid://d0o605snhkvgd" path="res://Enemy/Enemies/Eyeball/eyeball_enemy.gd" id="1_foh8x"]
 [ext_resource type="PackedScene" uid="uid://dgv57ds3mt5h1" path="res://Enemy/Enemies/Eyeball/EyeballEnemy.glb" id="3_fwud0"]
+[ext_resource type="Texture2D" uid="uid://dj8mwqxeyah36" path="res://greenHealthBar.png" id="4_qww0v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foh8x"]
 shading_mode = 0
@@ -52,6 +53,9 @@ viewport_path = NodePath("Sprite3D/SubViewport")
 [sub_resource type="SphereShape3D" id="SphereShape3D_foh8x"]
 radius = 20.0
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_qww0v"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
 [node name="EyeballEnemy" type="Node3D" node_paths=PackedStringArray("floorDetection", "enemyBody", "enemyDetection", "shootCoolDown", "bulletSpawnPoint")]
 script = ExtResource("1_foh8x")
 maxHeight = 10.0
@@ -63,7 +67,8 @@ bulletSpawnPoint = NodePath("BaseEnemy/BulletSpawnPoint")
 
 [node name="BaseEnemy" parent="." instance=ExtResource("1_8xnjk")]
 
-[node name="CharacterBody3D" parent="BaseEnemy" index="0" node_paths=PackedStringArray("variantOwner")]
+[node name="CharacterBody3D" parent="BaseEnemy" index="0" node_paths=PackedStringArray("healthBar", "variantOwner")]
+healthBar = NodePath("../../Sprite3D/SubViewport/TextureProgressBar")
 variantOwner = NodePath("../..")
 
 [node name="MeshInstance3D" parent="BaseEnemy/CharacterBody3D/CollisionShape3D" index="0"]
@@ -102,7 +107,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_o8b4l")
 surface_material_override/0 = SubResource("StandardMaterial3D_i1qba")
 
 [node name="Sprite3D" parent="BaseEnemy" index="2"]
+visible = false
 texture = SubResource("ViewportTexture_foh8x")
+
+[node name="TextureProgressBar" parent="BaseEnemy/Sprite3D/SubViewport" index="0"]
+visible = false
 
 [node name="EnemyDetectionRay" type="RayCast3D" parent="BaseEnemy"]
 target_position = Vector3(0, 0, 20)
@@ -124,6 +133,31 @@ collide_with_areas = true
 
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 1.5
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+texture = SubResource("ViewportTexture_qww0v")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+disable_3d = true
+transparent_bg = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Sprite3D/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 100.0
+texture_progress = ExtResource("4_qww0v")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
