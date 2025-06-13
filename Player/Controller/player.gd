@@ -38,6 +38,8 @@ func movement(_delta: float) -> void:
 	else:
 		constant_force = Vector3.ZERO
 		angular_velocity = Vector3.ZERO
+	if Input.is_action_just_pressed("jump"):
+		print('trying to jump')
 
 
 func launch(delta: float) -> void:
@@ -49,7 +51,7 @@ func launch(delta: float) -> void:
 	elif Input.is_action_just_released("launch charge"):
 		freeze = false
 		var launchDirection = (launchTarget.global_position - global_position).normalized()
-		apply_central_impulse(launchDirection * chargeAmount)
+		apply_central_impulse(launchDirection * chargeAmount * mass)
 		
 		state = playerStates.MOVING
 		chargeAmount = 0.0

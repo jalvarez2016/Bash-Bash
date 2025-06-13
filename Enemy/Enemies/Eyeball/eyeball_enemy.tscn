@@ -1,20 +1,167 @@
-[gd_scene load_steps=3 format=3 uid="uid://bt8twimc6ami0"]
+[gd_scene load_steps=19 format=3 uid="uid://bt8twimc6ami0"]
 
 [ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="1_8xnjk"]
+[ext_resource type="Script" uid="uid://d0o605snhkvgd" path="res://Enemy/Enemies/Eyeball/eyeball_enemy.gd" id="1_foh8x"]
+[ext_resource type="PackedScene" uid="uid://dgv57ds3mt5h1" path="res://Enemy/Enemies/Eyeball/EyeballEnemy.glb" id="3_fwud0"]
+[ext_resource type="Texture2D" uid="uid://dj8mwqxeyah36" path="res://greenHealthBar.png" id="4_qww0v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foh8x"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_fwud0"]
+material = SubResource("StandardMaterial3D_foh8x")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qww0v"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ea128"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8iw0"]
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpax1"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boxkw"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ej3le"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jrxg"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8b4l"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1qba"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_foh8x"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
-[node name="EyeballEnemy" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_foh8x"]
+radius = 20.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qww0v"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="EyeballEnemy" type="Node3D" node_paths=PackedStringArray("floorDetection", "enemyBody", "enemyDetection", "shootCoolDown", "bulletSpawnPoint")]
+script = ExtResource("1_foh8x")
+maxHeight = 10.0
+floorDetection = NodePath("RayCast3D")
+enemyBody = NodePath("BaseEnemy")
+enemyDetection = NodePath("BaseEnemy/EnemyDetectionRay")
+shootCoolDown = NodePath("ShootCooldown")
+bulletSpawnPoint = NodePath("BaseEnemy/BulletSpawnPoint")
 
 [node name="BaseEnemy" parent="." instance=ExtResource("1_8xnjk")]
 
+[node name="CharacterBody3D" parent="BaseEnemy" index="0" node_paths=PackedStringArray("healthBar", "variantOwner")]
+healthBar = NodePath("../../Sprite3D/SubViewport/TextureProgressBar")
+variantOwner = NodePath("../..")
+
+[node name="MeshInstance3D" parent="BaseEnemy/CharacterBody3D/CollisionShape3D" index="0"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/MeshInstance3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.85022)
+mesh = SubResource("SphereMesh_fwud0")
+
+[node name="EyeballEnemy" parent="BaseEnemy/CharacterBody3D/CollisionShape3D" index="1" instance=ExtResource("3_fwud0")]
+
+[node name="Cube" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_qww0v")
+surface_material_override/1 = SubResource("StandardMaterial3D_ea128")
+
+[node name="Circle" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="1"]
+transform = Transform3D(-0.315849, -1.52489e-08, 0, 0, 0, -0.315849, 2.76124e-08, -0.174427, 0, 0, 0, 1.21475)
+surface_material_override/0 = SubResource("StandardMaterial3D_x8iw0")
+
+[node name="BézierCurve" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_qpax1")
+
+[node name="BézierCurve_001" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="3"]
+surface_material_override/0 = SubResource("StandardMaterial3D_boxkw")
+
+[node name="BézierCurve_002" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="4"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ej3le")
+
+[node name="BézierCurve_003" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="5"]
+surface_material_override/0 = SubResource("StandardMaterial3D_4jrxg")
+
+[node name="BézierCurve_004" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="6"]
+surface_material_override/0 = SubResource("StandardMaterial3D_o8b4l")
+
+[node name="BézierCurve_005" parent="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy" index="7"]
+surface_material_override/0 = SubResource("StandardMaterial3D_i1qba")
+
 [node name="Sprite3D" parent="BaseEnemy" index="2"]
+visible = false
 texture = SubResource("ViewportTexture_foh8x")
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
+[node name="TextureProgressBar" parent="BaseEnemy/Sprite3D/SubViewport" index="0"]
+visible = false
+
+[node name="EnemyDetectionRay" type="RayCast3D" parent="BaseEnemy"]
 target_position = Vector3(0, 0, 20)
+collision_mask = 3
+
+[node name="BulletSpawnPoint" type="Marker3D" parent="BaseEnemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_foh8x")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, 0)
+collision_mask = 7
+collide_with_areas = true
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+texture = SubResource("ViewportTexture_qww0v")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+disable_3d = true
+transparent_bg = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Sprite3D/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 100.0
+texture_progress = ExtResource("4_qww0v")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
 
 [editable path="BaseEnemy"]
+[editable path="BaseEnemy/CharacterBody3D/CollisionShape3D/EyeballEnemy"]

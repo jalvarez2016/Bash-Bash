@@ -3,6 +3,7 @@ extends Node3D
 @export var health: float = 100.0
 @export var healthBar: TextureProgressBar
 @export var attackManager: Node3D
+@export var variantOwner: Node3D
 
 func _ready() -> void:
 	healthBar.max_value = maxHealth
@@ -13,6 +14,8 @@ func damage(damageAmount: float):
 		health = 0
 		print('enemy dead')
 		owner.queue_free()
+		if variantOwner:
+			variantOwner.queue_free()
 	else:
 		health -= damageAmount
 	healthBar.value = health

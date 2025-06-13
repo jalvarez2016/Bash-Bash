@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://s2s6kldgbhyt"]
+
+[ext_resource type="Script" uid="uid://xog6rkkgtkpv" path="res://Enemy/Enemies/Eyeball/bullet.gd" id="1_l7pm6"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_er5yg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_er5yg"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l7pm6"]
+
+[node name="Bullet" type="RigidBody3D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_l7pm6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_er5yg")
+surface_material_override/0 = SubResource("StandardMaterial3D_er5yg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_l7pm6")
+
+[node name="Lifespan" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Lifespan" to="." method="_on_lifespan_timeout"]

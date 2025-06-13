@@ -13,7 +13,7 @@ height = 4.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_jv620"]
 radius = 5.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rfmx6"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_qsll7"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="BaseEnemy" type="Node3D"]
@@ -37,7 +37,7 @@ shape = SubResource("SphereShape3D_jv620")
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 billboard = 1
-texture = SubResource("ViewportTexture_rfmx6")
+texture = SubResource("ViewportTexture_qsll7")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 disable_3d = true

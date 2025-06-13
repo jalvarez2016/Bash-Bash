@@ -10,14 +10,20 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group("attachment"):
 		if !body.canAttach:
 			return
+		if playerBody.mass < body.minMassReq:
+			print('too big to pick up', playerBody.mass / 2, body.mass)
+			return
 		var shieldAttachment: Node3D = body.collider
+		var addedMass : float = shieldAttachment.mass
 		shieldAttachment.reparent(playerBody, true)
+		playerBody.mass = playerBody.mass + addedMass
 		shieldAttachments.push_back(body.collider)
 		body.collider.playerShieldManager = self
 		body.collider.isAttached = true
 		body.queue_free()
 	if body.is_in_group('enemy'):
 		playerBody.damage(10)
+		
 
 
 func _process(_delta: float) -> void:

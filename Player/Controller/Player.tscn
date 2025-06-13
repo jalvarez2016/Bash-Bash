@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://clh46a28l5d6f"]
+[gd_scene load_steps=16 format=3 uid="uid://clh46a28l5d6f"]
 
 [ext_resource type="Script" uid="uid://dkr261g6uqrfr" path="res://Player/Controller/player.gd" id="1_4a7vj"]
 [ext_resource type="Script" uid="uid://b6gd3mddpm4uv" path="res://Player/Controller/camera.gd" id="2_i2o43"]
@@ -9,6 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://dvw0tposbwj3y" path="res://Player/UI/main.tscn" id="6_5vfx0"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qx07r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilci4"]
+shading_mode = 0
+albedo_color = Color(1, 0.447059, 0.32549, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3s4d5"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f67yr"]
+shading_mode = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_4a7vj"]
 
@@ -26,6 +37,8 @@ albedo_color = Color(0.933242, 0, 0.0206011, 1)
 [node name="RigidBody3D" type="RigidBody3D" parent="." node_paths=PackedStringArray("healthManager", "spring_arm", "playerMain", "chargeUI", "launchTarget", "shieldController") groups=["player"]]
 collision_layer = 2
 collision_mask = 7
+gravity_scale = 5.0
+center_of_mass_mode = 1
 contact_monitor = true
 max_contacts_reported = 50
 script = ExtResource("1_4a7vj")
@@ -42,6 +55,11 @@ shape = SubResource("SphereShape3D_qx07r")
 
 [node name="Player" parent="RigidBody3D/PlayerCollision" instance=ExtResource("2_ilci4")]
 transform = Transform3D(-3.49691e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.49691e-08, 0, 0, 0)
+
+[node name="Sphere" parent="RigidBody3D/PlayerCollision/Player" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ilci4")
+surface_material_override/1 = SubResource("StandardMaterial3D_3s4d5")
+surface_material_override/2 = SubResource("StandardMaterial3D_f67yr")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/PlayerCollision"]
 visible = false
@@ -83,13 +101,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 visible = false
-offset_left = 751.0
-offset_top = 431.0
-offset_right = 983.0
-offset_bottom = 458.0
+anchors_preset = -1
+anchor_left = 0.675347
+anchor_top = 0.324074
+anchor_right = 0.698786
+anchor_bottom = 0.324074
+offset_top = 232.0
+offset_right = 204.999
+offset_bottom = 259.0
 rotation = -1.57079
 max_value = 80.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthManager" type="Node3D" parent="." node_paths=PackedStringArray("healthBar")]
 script = ExtResource("5_xya77")
@@ -110,3 +133,5 @@ playerBody = NodePath("../RigidBody3D")
 
 [connection signal="body_shape_entered" from="RigidBody3D" to="RigidBody3D" method="_on_body_shape_entered"]
 [connection signal="body_entered" from="RigidBody3D/Area3D" to="ShieldController" method="_on_area_3d_body_entered"]
+
+[editable path="RigidBody3D/PlayerCollision/Player"]
