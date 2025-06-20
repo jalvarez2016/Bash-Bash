@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bn0vwssjufq6q"]
+
+[ext_resource type="PackedScene" uid="uid://bifo1172wcs1k" path="res://Environment/Shared/RespawnRoom/RespawnRoom.glb" id="1_hwfdq"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_xaped"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_vo7mv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4i1jm"]
+albedo_color = Color(1, 1, 0.482353, 1)
+emission_enabled = true
+emission = Color(0.919379, 0.739572, 0.156652, 1)
+emission_energy_multiplier = 6.0
+
+[sub_resource type="Resource" id="Resource_0t8mp"]
+script = ExtResource("3_vo7mv")
+duration = 1.0
+transition = 0
+ease = 2
+
+[node name="StartRoom" type="Node3D"]
+
+[node name="RespawnRoom" parent="." instance=ExtResource("1_hwfdq")]
+
+[node name="Cube_002" parent="RespawnRoom" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_4i1jm")
+
+[node name="PhantomCamera3D" type="Node3D" parent="."]
+transform = Transform3D(-0.633621, 0.343413, 0.693247, -0.0301109, 0.884455, -0.465653, -0.773057, -0.315922, -0.550069, 1.20637, 0.737483, -1.041)
+script = ExtResource("2_xaped")
+tween_resource = SubResource("Resource_0t8mp")
+
+[editable path="RespawnRoom"]
