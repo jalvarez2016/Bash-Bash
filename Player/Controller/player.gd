@@ -8,6 +8,7 @@ extends RigidBody3D
 @export var launchTarget: Marker3D
 @export var shieldController: Node3D
 
+var cameraRotation
 var angular_acceleration: float = 2
 var chargeAmount: float = 0.0
 var playerStates = {
@@ -17,6 +18,9 @@ var playerStates = {
 var state: String = playerStates.MOVING
 var speed: float = 10
 var strength: int = 5
+
+func _ready() -> void:
+	cameraRotation = spring_arm
 
 func _process(delta: float) -> void:
 	movement(delta)
@@ -28,7 +32,7 @@ func movement(_delta: float) -> void:
 		return
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var move_direction : Vector3 = (playerMain.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	move_direction = move_direction.rotated(Vector3.UP, spring_arm.rotation.y).normalized()
+	move_direction = move_direction.rotated(Vector3.UP, cameraRotation.rotation.y).normalized()
 	var rotationDirection = (angular_acceleration * move_direction * speed * .1).rotated(Vector3.UP, 90)
 	if move_direction:
 		if Input.is_action_pressed("sprint"):

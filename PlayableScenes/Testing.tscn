@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://cnu00jud85ouo"]
+[gd_scene load_steps=16 format=3 uid="uid://cnu00jud85ouo"]
 
 [ext_resource type="Script" uid="uid://cldwudaw2411s" path="res://PlayableScenes/WorldManager.gd" id="1_pd50j"]
 [ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_xnys2"]
-[ext_resource type="PackedScene" uid="uid://sfyqwrvgtb20" path="res://Environment/wall.tscn" id="2_il20l"]
-[ext_resource type="PackedScene" uid="uid://dxadduf7ncnn7" path="res://Enemy/base_enemy.tscn" id="4_a45pm"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="5_d36j6"]
+[ext_resource type="Script" uid="uid://bbsvbbyv7dwbc" path="res://Environment/Shared/LookAtLabel/LookAtLabel.gd" id="5_hdvt3"]
 [ext_resource type="PackedScene" uid="uid://dbrq67ppjp311" path="res://Environment/Randomizers/random_item_spawner.tscn" id="5_iutbq"]
 [ext_resource type="PackedScene" uid="uid://bt8twimc6ami0" path="res://Enemy/Enemies/Eyeball/eyeball_enemy.tscn" id="5_pd50j"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_hdvt3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_34qg5"]
 sky_top_color = Color(0.619608, 0.356863, 0.54902, 1)
@@ -22,13 +23,22 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_34qg5"]
-size = Vector2(100, 100)
+size = Vector2(100, 800)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_34qg5"]
-data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a45pm"]
+data = PackedVector3Array(50, 0, 400, -50, 0, 400, 50, 0, -400, -50, 0, 400, -50, 0, -400, 50, 0, -400)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iutbq"]
-size = Vector3(800, 10, 800)
+size = Vector3(800, 10, 1020)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a45pm"]
+radius = 17.771
+
+[sub_resource type="Resource" id="Resource_unism"]
+script = ExtResource("6_hdvt3")
+duration = 1.0
+transition = 10
+ease = 2
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("resetPosition")]
 script = ExtResource("1_pd50j")
@@ -47,31 +57,153 @@ mesh = SubResource("PlaneMesh_34qg5")
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_34qg5")
+shape = SubResource("ConcavePolygonShape3D_a45pm")
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_xnys2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248367, 0.5, 1.25542)
-
-[node name="Node3D" parent="." instance=ExtResource("2_il20l")]
-transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, -8.56766, 10, 1.63052)
-
-[node name="BaseEnemy" parent="." instance=ExtResource("4_a45pm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 0)
+[node name="Player" parent="." instance=ExtResource("1_xnys2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248367, 1.30256, 376.186)
 
 [node name="RandomItemSpawner" parent="." instance=ExtResource("5_iutbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="EyeballEnemy" parent="." instance=ExtResource("5_pd50j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -21)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -123.152)
 
 [node name="ResetPos" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 354)
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, -64.4133)
 shape = SubResource("BoxShape3D_iutbq")
 
+[node name="Movement" type="Label3D" parent="." node_paths=PackedStringArray("area_pcam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4541, 9.03942, 338.389)
+billboard = 1
+text = "Use
+W	
+A S D
+To move around
+"
+font_size = 500
+outline_size = 100
+script = ExtResource("5_hdvt3")
+area_pcam = NodePath("PhantomCamera3D")
+
+[node name="Area3D" type="Area3D" parent="Movement"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Movement/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1.43478, 0)
+shape = SubResource("SphereShape3D_a45pm")
+
+[node name="PhantomCamera3D" type="Node3D" parent="Movement"]
+transform = Transform3D(-3.78552e-08, 0.5, 0.866025, 2.18557e-08, 0.866025, -0.5, -1, 0, -4.37114e-08, 27.2877, -8, -0.386536)
+script = ExtResource("5_d36j6")
+tween_resource = SubResource("Resource_unism")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="Sprint" type="Label3D" parent="." node_paths=PackedStringArray("area_pcam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4541, 9.03942, 299.346)
+billboard = 1
+text = "Hold Shift to Sprint"
+font_size = 500
+outline_size = 100
+script = ExtResource("5_hdvt3")
+area_pcam = NodePath("PhantomCamera3D")
+
+[node name="Area3D" type="Area3D" parent="Sprint"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sprint/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1.43478, 0)
+shape = SubResource("SphereShape3D_a45pm")
+
+[node name="PhantomCamera3D" type="Node3D" parent="Sprint"]
+transform = Transform3D(-3.78552e-08, 0.5, 0.866025, 2.18557e-08, 0.866025, -0.5, -1, 0, -4.37114e-08, 27.2877, -8, -0.386536)
+script = ExtResource("5_d36j6")
+tween_resource = SubResource("Resource_unism")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="Launch" type="Label3D" parent="." node_paths=PackedStringArray("area_pcam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4541, 9.03942, 260.326)
+billboard = 1
+text = "Hold and Release
+left click to launch yourself"
+font_size = 500
+outline_size = 100
+script = ExtResource("5_hdvt3")
+area_pcam = NodePath("PhantomCamera3D")
+
+[node name="Area3D" type="Area3D" parent="Launch"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Launch/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1.43478, 0)
+shape = SubResource("SphereShape3D_a45pm")
+
+[node name="PhantomCamera3D" type="Node3D" parent="Launch"]
+transform = Transform3D(-3.78552e-08, 0.5, 0.866025, 2.18557e-08, 0.866025, -0.5, -1, 0, -4.37114e-08, 27.2877, -8, -0.386536)
+script = ExtResource("5_d36j6")
+tween_resource = SubResource("Resource_unism")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="Collect" type="Label3D" parent="." node_paths=PackedStringArray("area_pcam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4541, 9.03942, 101.326)
+billboard = 1
+text = "Roll over the 
+debri to grow in size
+and shield yourself"
+font_size = 500
+outline_size = 100
+script = ExtResource("5_hdvt3")
+area_pcam = NodePath("PhantomCamera3D")
+
+[node name="Area3D" type="Area3D" parent="Collect"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collect/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1.43478, 0)
+shape = SubResource("SphereShape3D_a45pm")
+
+[node name="PhantomCamera3D" type="Node3D" parent="Collect"]
+transform = Transform3D(-3.78552e-08, 0.5, 0.866025, 2.18557e-08, 0.866025, -0.5, -1, 0, -4.37114e-08, 27.2877, -8, -0.386536)
+script = ExtResource("5_d36j6")
+tween_resource = SubResource("Resource_unism")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="Enemy" type="Label3D" parent="." node_paths=PackedStringArray("area_pcam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4541, 9.03942, -69.6737)
+billboard = 1
+text = "Attack enemy by
+launching yourself"
+font_size = 500
+outline_size = 100
+script = ExtResource("5_hdvt3")
+area_pcam = NodePath("PhantomCamera3D")
+
+[node name="Area3D" type="Area3D" parent="Enemy"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -1.43478, 0)
+shape = SubResource("SphereShape3D_a45pm")
+
+[node name="PhantomCamera3D" type="Node3D" parent="Enemy"]
+transform = Transform3D(-3.78552e-08, 0.5, 0.866025, 2.18557e-08, 0.866025, -0.5, -1, 0, -4.37114e-08, 27.2877, -8, -0.386536)
+script = ExtResource("5_d36j6")
+tween_resource = SubResource("Resource_unism")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Movement/Area3D" to="Movement" method="_on_area_entered"]
+[connection signal="body_exited" from="Movement/Area3D" to="Movement" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Sprint/Area3D" to="Sprint" method="_on_area_entered"]
+[connection signal="body_exited" from="Sprint/Area3D" to="Sprint" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Launch/Area3D" to="Launch" method="_on_area_entered"]
+[connection signal="body_exited" from="Launch/Area3D" to="Launch" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Collect/Area3D" to="Collect" method="_on_area_entered"]
+[connection signal="body_exited" from="Collect/Area3D" to="Collect" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="Enemy/Area3D" to="Enemy" method="_on_area_entered"]
+[connection signal="body_exited" from="Enemy/Area3D" to="Enemy" method="_on_area_3d_body_exited"]
