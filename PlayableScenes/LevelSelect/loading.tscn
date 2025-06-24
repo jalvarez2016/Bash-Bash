@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://kecfpw4iiojb"]
+
+[ext_resource type="Script" uid="uid://cqq128xjlwqbs" path="res://PlayableScenes/LevelSelect/loading.gd" id="1_8mxig"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1vvl"]
+bg_color = Color(0.125911, 0.125911, 0.125911, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j1vvl"]
+font_size = 50
+
+[node name="Loading" type="Control" node_paths=PackedStringArray("min_timer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_8mxig")
+min_timer = NodePath("Timer")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1vvl")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.5
+offset_top = -34.5
+offset_right = 193.5
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading Scene..."
+label_settings = SubResource("LabelSettings_j1vvl")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

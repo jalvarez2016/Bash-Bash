@@ -1,0 +1,249 @@
+[gd_scene load_steps=22 format=3 uid="uid://d3sfhy11bng7b"]
+
+[ext_resource type="Script" uid="uid://bag8lclxqxnf4" path="res://PlayableScenes/LevelSelect/level.gd" id="1_6yoru"]
+[ext_resource type="Script" uid="uid://cl0qycakmt6rh" path="res://PlayableScenes/LevelSelect/level_select.gd" id="1_mcag0"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="1_yb21p"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_kjm5f"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_6yoru"]
+[ext_resource type="Script" uid="uid://bc07one7kq266" path="res://PlayableScenes/LevelSelect/player.gd" id="3_cj68k"]
+[ext_resource type="PackedScene" uid="uid://cur82cwbs4pcp" path="res://Player/Model/Player.glb" id="4_kjm5f"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mcag0"]
+size = Vector2(800, 800)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cj68k"]
+data = PackedVector3Array(400, 0, 400, -400, 0, 400, 400, 0, -400, -400, 0, 400, -400, 0, -400, 400, 0, -400)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yurqr"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmfpg"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0.529412, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cj68k"]
+radius = 2.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_6yoru"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+outline_size = 16
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hnipo"]
+sky_top_color = Color(0.787018, 0.601241, 0.631682, 1)
+sky_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
+sky_curve = 0.599999
+ground_bottom_color = Color(0.0938589, 0.0735825, 0.371181, 1)
+ground_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
+sun_angle_max = 8.0
+sun_curve = 5.32593
+
+[sub_resource type="Sky" id="Sky_uh013"]
+sky_material = SubResource("ProceduralSkyMaterial_hnipo")
+
+[sub_resource type="Environment" id="Environment_65v6v"]
+background_mode = 2
+sky = SubResource("Sky_uh013")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6yoru"]
+shading_mode = 0
+albedo_color = Color(1, 0.447059, 0.32549, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cj68k"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcag0"]
+shading_mode = 0
+
+[sub_resource type="Resource" id="Resource_cj68k"]
+script = ExtResource("2_kjm5f")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kjm5f"]
+radius = 0.911569
+height = 1.86548
+
+[node name="LevelSelect" type="Node3D" node_paths=PackedStringArray("playerCamera")]
+script = ExtResource("1_mcag0")
+playerCamera = NodePath("CharacterBody3D/Player/PhantomCamera3D")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_mcag0")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_cj68k")
+
+[node name="Level1" type="MeshInstance3D" parent="Floor" node_paths=PackedStringArray("level_select_owner", "level_label")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -31, 0, 3)
+mesh = SubResource("BoxMesh_yurqr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wmfpg")
+script = ExtResource("1_6yoru")
+level_select_owner = NodePath("../..")
+level_scene = "res://PlayableScenes/LevelSelect/Level 1/level_1.tscn"
+level_label = NodePath("LevelLabel")
+
+[node name="Area3D" type="Area3D" parent="Floor/Level1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/Level1/Area3D"]
+shape = SubResource("SphereShape3D_cj68k")
+
+[node name="LevelLabel" type="Label" parent="Floor/Level1"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 75.0
+grow_horizontal = 2
+text = "
+Level 1
+The Forest
+"
+label_settings = SubResource("LabelSettings_6yoru")
+horizontal_alignment = 1
+
+[node name="Level2" type="MeshInstance3D" parent="Floor" node_paths=PackedStringArray("level_select_owner", "level_label")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -15, 0, -6)
+mesh = SubResource("BoxMesh_yurqr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wmfpg")
+script = ExtResource("1_6yoru")
+level_select_owner = NodePath("../..")
+level_label = NodePath("LevelLabel")
+
+[node name="Area3D" type="Area3D" parent="Floor/Level2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/Level2/Area3D"]
+shape = SubResource("SphereShape3D_cj68k")
+
+[node name="LevelLabel" type="Label" parent="Floor/Level2"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 75.0
+grow_horizontal = 2
+text = "
+Level 2
+The Outskirts
+"
+label_settings = SubResource("LabelSettings_6yoru")
+horizontal_alignment = 1
+
+[node name="Level3" type="MeshInstance3D" parent="Floor" node_paths=PackedStringArray("level_select_owner", "level_label")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 2, 0, 0)
+mesh = SubResource("BoxMesh_yurqr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wmfpg")
+script = ExtResource("1_6yoru")
+level_select_owner = NodePath("../..")
+level_label = NodePath("LevelLabel")
+
+[node name="Area3D" type="Area3D" parent="Floor/Level3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/Level3/Area3D"]
+shape = SubResource("SphereShape3D_cj68k")
+
+[node name="LevelLabel" type="Label" parent="Floor/Level3"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 75.0
+grow_horizontal = 2
+text = "
+Level 3
+The Mountains
+"
+label_settings = SubResource("LabelSettings_6yoru")
+horizontal_alignment = 1
+
+[node name="Level4" type="MeshInstance3D" parent="Floor" node_paths=PackedStringArray("level_select_owner", "level_label")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 21, 0, -5)
+mesh = SubResource("BoxMesh_yurqr")
+surface_material_override/0 = SubResource("StandardMaterial3D_wmfpg")
+script = ExtResource("1_6yoru")
+level_select_owner = NodePath("../..")
+level_label = NodePath("LevelLabel")
+
+[node name="Area3D" type="Area3D" parent="Floor/Level4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/Level4/Area3D"]
+shape = SubResource("SphereShape3D_cj68k")
+
+[node name="LevelLabel" type="Label" parent="Floor/Level4"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 75.0
+grow_horizontal = 2
+text = "
+Level 3
+The Ruins
+"
+label_settings = SubResource("LabelSettings_6yoru")
+horizontal_alignment = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_65v6v")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433017, 0.250001, -0.452451, 0.891488, -0.0232146, -0.21282, -0.133218, -0.967967, 0, 0, 0)
+light_color = Color(1, 0.721569, 0.160784, 1)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("3_6yoru")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." groups=["player"]]
+transform = Transform3D(-4.37114e-08, 2.77668e-16, 1, 1, -4.37114e-08, 4.37114e-08, 4.37114e-08, 1, 1.02251e-15, -31, 2, 3)
+script = ExtResource("3_cj68k")
+
+[node name="Player" parent="CharacterBody3D" instance=ExtResource("4_kjm5f")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+
+[node name="Sphere" parent="CharacterBody3D/Player" index="0"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 4.37114e-08, 1, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_6yoru")
+surface_material_override/1 = SubResource("StandardMaterial3D_cj68k")
+surface_material_override/2 = SubResource("StandardMaterial3D_mcag0")
+
+[node name="PhantomCamera3D" type="Node3D" parent="CharacterBody3D/Player"]
+transform = Transform3D(1.31911e-07, 0.883883, 0.883883, -7.72716e-08, -0.883883, 0.883883, 1.25, -1.47914e-07, -3.86358e-08, 13.75, 12.5, 0)
+script = ExtResource("1_yb21p")
+tween_resource = SubResource("Resource_cj68k")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 4.37114e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_kjm5f")
+
+[connection signal="body_entered" from="Floor/Level1/Area3D" to="Floor/Level1" method="_on_area_entered"]
+[connection signal="body_exited" from="Floor/Level1/Area3D" to="Floor/Level1" method="_on_area_exited"]
+[connection signal="body_entered" from="Floor/Level2/Area3D" to="Floor/Level2" method="_on_area_entered"]
+[connection signal="body_exited" from="Floor/Level2/Area3D" to="Floor/Level2" method="_on_area_exited"]
+[connection signal="body_entered" from="Floor/Level3/Area3D" to="Floor/Level3" method="_on_area_entered"]
+[connection signal="body_exited" from="Floor/Level3/Area3D" to="Floor/Level3" method="_on_area_exited"]
+[connection signal="body_entered" from="Floor/Level4/Area3D" to="Floor/Level4" method="_on_area_entered"]
+[connection signal="body_exited" from="Floor/Level4/Area3D" to="Floor/Level4" method="_on_area_exited"]
+
+[editable path="CharacterBody3D/Player"]

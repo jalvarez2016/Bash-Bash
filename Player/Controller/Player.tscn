@@ -1,12 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://clh46a28l5d6f"]
+[gd_scene load_steps=21 format=3 uid="uid://clh46a28l5d6f"]
 
 [ext_resource type="Script" uid="uid://dkr261g6uqrfr" path="res://Player/Controller/player.gd" id="1_4a7vj"]
+[ext_resource type="Script" uid="uid://cfgp2qshfegwg" path="res://Player/Controller/player_manager.gd" id="1_vq2sl"]
 [ext_resource type="Script" uid="uid://b6gd3mddpm4uv" path="res://Player/Controller/camera.gd" id="2_i2o43"]
 [ext_resource type="PackedScene" uid="uid://cur82cwbs4pcp" path="res://Player/Model/Player.glb" id="2_ilci4"]
 [ext_resource type="Script" uid="uid://b522q58g1bav4" path="res://Player/Controller/shield_controller.gd" id="2_pyy65"]
 [ext_resource type="Script" uid="uid://dr2iycpf0171e" path="res://Player/Controller/playerTarget.gd" id="3_fp8p3"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_3s4d5"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_f67yr"]
 [ext_resource type="Script" uid="uid://cai7xtthcnai2" path="res://Player/Controller/healthManager.gd" id="5_xya77"]
 [ext_resource type="PackedScene" uid="uid://dvw0tposbwj3y" path="res://Player/UI/main.tscn" id="6_5vfx0"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_f67yr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qx07r"]
 
@@ -26,16 +30,24 @@ shading_mode = 0
 [sub_resource type="SphereShape3D" id="SphereShape3D_pyy65"]
 radius = 1.0
 
+[sub_resource type="Resource" id="Resource_vq2sl"]
+script = ExtResource("5_f67yr")
+duration = 1.0
+transition = 10
+ease = 2
+
 [sub_resource type="SphereMesh" id="SphereMesh_i2o43"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7h38"]
 shading_mode = 0
 albedo_color = Color(0.933242, 0, 0.0206011, 1)
 
-[node name="Player" type="Node3D"]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("player_camera")]
+script = ExtResource("1_vq2sl")
+player_camera = NodePath("SpringArm3D/CameraHolder/PhantomCamera3D")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." node_paths=PackedStringArray("healthManager", "spring_arm", "playerMain", "chargeUI", "launchTarget", "shieldController") groups=["player"]]
-collision_layer = 3
+collision_layer = 2
 collision_mask = 7
 gravity_scale = 5.0
 center_of_mass_mode = 1
@@ -47,7 +59,7 @@ spring_arm = NodePath("../SpringArm3D")
 playerMain = NodePath("..")
 sprintMultiplier = 2.5
 chargeUI = NodePath("../ProgressBar")
-launchTarget = NodePath("../SpringArm3D/CameraHolder/Camera3D/RayCast3D/Marker3D")
+launchTarget = NodePath("../SpringArm3D/CameraHolder/PhantomCamera3D/RayCast3D/Marker3D")
 shieldController = NodePath("../ShieldController")
 
 [node name="PlayerCollision" type="CollisionShape3D" parent="RigidBody3D"]
@@ -74,16 +86,20 @@ shape = SubResource("SphereShape3D_pyy65")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="." node_paths=PackedStringArray("playerBody")]
 spring_length = 8.0
-margin = 5.0
+margin = -1.0
 script = ExtResource("2_i2o43")
 playerBody = NodePath("../RigidBody3D")
 
 [node name="CameraHolder" type="Node3D" parent="SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D/CameraHolder"]
+[node name="PhantomCamera3D" type="Node3D" parent="SpringArm3D/CameraHolder"]
+script = ExtResource("4_3s4d5")
+priority = 1
+tween_resource = SubResource("Resource_vq2sl")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
-[node name="RayCast3D" type="RayCast3D" parent="SpringArm3D/CameraHolder/Camera3D" node_paths=PackedStringArray("debugObject", "resetPosition")]
+[node name="RayCast3D" type="RayCast3D" parent="SpringArm3D/CameraHolder/PhantomCamera3D" node_paths=PackedStringArray("debugObject", "resetPosition")]
 transform = Transform3D(-1, 0, 8.74228e-08, 2.26267e-08, 0.965926, 0.258819, -8.44439e-08, 0.258819, -0.965926, 0, 2, 0)
 target_position = Vector3(0, 0, 50)
 collision_mask = 7
@@ -91,12 +107,12 @@ script = ExtResource("3_fp8p3")
 debugObject = NodePath("MeshInstance3D")
 resetPosition = NodePath("Marker3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D/CameraHolder/Camera3D/RayCast3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArm3D/CameraHolder/PhantomCamera3D/RayCast3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
 mesh = SubResource("SphereMesh_i2o43")
 surface_material_override/0 = SubResource("StandardMaterial3D_h7h38")
 
-[node name="Marker3D" type="Marker3D" parent="SpringArm3D/CameraHolder/Camera3D/RayCast3D"]
+[node name="Marker3D" type="Marker3D" parent="SpringArm3D/CameraHolder/PhantomCamera3D/RayCast3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
@@ -130,6 +146,15 @@ script = ExtResource("2_pyy65")
 playerBody = NodePath("../RigidBody3D")
 
 [node name="Control" parent="." instance=ExtResource("6_5vfx0")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("10_f67yr")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [connection signal="body_shape_entered" from="RigidBody3D" to="RigidBody3D" method="_on_body_shape_entered"]
 [connection signal="body_entered" from="RigidBody3D/Area3D" to="ShieldController" method="_on_area_3d_body_entered"]

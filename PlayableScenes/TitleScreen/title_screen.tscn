@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="1_j35k6"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_ogbmd"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_ogbmd"]
-[ext_resource type="PackedScene" uid="uid://bn0vwssjufq6q" path="res://environment/Shared/RespawnRoom/start_room.tscn" id="4_bjk84"]
+[ext_resource type="PackedScene" uid="uid://bn0vwssjufq6q" path="res://Environment/Shared/RespawnRoom/start_room.tscn" id="4_bjk84"]
 [ext_resource type="Script" uid="uid://cu7kbubnlg4u6" path="res://PlayableScenes/TitleScreen/menuController.gd" id="4_jpuxo"]
 [ext_resource type="Script" uid="uid://b03o1emvhjmid" path="res://PlayableScenes/TitleScreen/quit.gd" id="5_viias"]
 [ext_resource type="Script" uid="uid://bt5f3e7jvca3l" path="res://PlayableScenes/TitleScreen/transitionScenes.gd" id="6_u8mjm"]
@@ -18,12 +18,12 @@ ground_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
 sun_angle_max = 8.0
 sun_curve = 5.32593
 
-[sub_resource type="Sky" id="Sky_uh013"]
+[sub_resource type="Sky" id="Sky_e7nb2"]
 sky_material = SubResource("ProceduralSkyMaterial_xefje")
 
 [sub_resource type="Environment" id="Environment_j35k6"]
 background_mode = 2
-sky = SubResource("Sky_uh013")
+sky = SubResource("Sky_e7nb2")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -123,7 +123,7 @@ transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, -1.16749
 text = "PLAY"
 script = ExtResource("6_u8mjm")
 titleScreen = NodePath("../../..")
-nextScene = "res://PlayableScenes/Testing.tscn"
+nextScene = "res://PlayableScenes/LevelSelect/level_select.tscn"
 
 [node name="Player" parent="Menu/Label3D" instance=ExtResource("7_e7nb2")]
 transform = Transform3D(0.130202, -0.00980148, -0.213194, 0.0914883, 0.228189, 0.0453829, 0.192815, -0.101655, 0.122429, -2.37461, -1.11469, 0.039134)
