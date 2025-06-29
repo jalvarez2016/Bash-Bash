@@ -5,7 +5,6 @@ var playerCamera
 
 func _on_area_entered(body: Node3D) -> void:
 	if body.is_in_group('player'):
-		print(body)
 		playerCamera = body.cameraRotation
 		body.cameraRotation = area_pcam
 		area_pcam.set_priority(20)

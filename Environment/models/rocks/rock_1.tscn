@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://2meph8vbsqxs"]
+
+[ext_resource type="PackedScene" uid="uid://5uy37tpv5xg3" path="res://Environment/models/rocks/Rock1.glb" id="1_y7vpp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f20il"]
+albedo_color = Color(0.685146, 0.685146, 0.685146, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_y7vpp"]
+data = PackedVector3Array(-1, -1, 0.8738, -1, 0.3997, -1, -1, 0.3997, 0.3404, -1, -1, 0.8738, -1, -1, -1.3702, -1, 0.3997, -1, -1, -1, -1.3702, 0.389, 0.3997, -0.9229, -1, 0.3997, -1, -1, -1, -1.3702, 1, -1, -1.132, 0.389, 0.3997, -0.9229, 1, -1, -1.132, 0.389, 0.3997, 0.2747, 0.389, 0.3997, -0.9229, 1, -1, -1.132, 1, -1, 0.6764, 0.389, 0.3997, 0.2747, 1, -1, 0.6764, -1, 0.3997, 0.3404, 0.389, 0.3997, 0.2747, 1, -1, 0.6764, -1, -1, 0.8738, -1, 0.3997, 0.3404, -1, -1, -1.3702, 1, -1, 0.6764, 1, -1, -1.132, -1, -1, -1.3702, -1, -1, 0.8738, 1, -1, 0.6764, 0.389, 0.3997, -0.9229, -1, 0.3997, 0.3404, -1, 0.3997, -1, 0.389, 0.3997, -0.9229, 0.389, 0.3997, 0.2747, -1, 0.3997, 0.3404)
+
+[node name="Rock1" instance=ExtResource("1_y7vpp")]
+
+[node name="Cube_001" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_f20il")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube_001" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_001/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_y7vpp")
