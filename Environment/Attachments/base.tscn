@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://xntt0llhap0v" path="res://Environment/Attachments/playerShieldAttachment.gd" id="2_psku5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ahehf"]
+resource_local_to_scene = true
 size = Vector3(0.8, 1.5, 2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_skcws"]

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmccplpf1w5cv"]
+
+[ext_resource type="PackedScene" uid="uid://6614agfkyt2e" path="res://Environment/Attachments/base.tscn" id="1_3bvn1"]
+[ext_resource type="PackedScene" uid="uid://310d5736wxvp" path="res://Environment/models/forest/mesh/Branch.glb" id="2_pvuxc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h1qju"]
+resource_local_to_scene = true
+size = Vector3(0.8, 0.373047, 3.26733)
+
+[node name="Debris-Branch" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="ShieldAttachment" parent="." instance=ExtResource("1_3bvn1")]
+mass = 5.0
+
+[node name="CollisionShape3D" parent="ShieldAttachment" index="0"]
+shape = SubResource("BoxShape3D_h1qju")
+
+[node name="Branch" parent="ShieldAttachment/CollisionShape3D" index="0" instance=ExtResource("2_pvuxc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0663235, -0.111703, 1.17663)
+
+[node name="MeshInstance3D" parent="ShieldAttachment/CollisionShape3D" index="1"]
+visible = false
+
+[node name="CollisionShape3D" parent="ShieldAttachment/CollisionShape3D/Area3D" index="0"]
+shape = SubResource("BoxShape3D_h1qju")
+
+[editable path="ShieldAttachment"]
+[editable path="ShieldAttachment/CollisionShape3D/Branch"]

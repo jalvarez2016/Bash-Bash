@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://b42fe6bn8ktob"]
+
+[ext_resource type="PackedScene" uid="uid://6614agfkyt2e" path="res://Environment/Attachments/base.tscn" id="1_8ytau"]
+[ext_resource type="PackedScene" uid="uid://byrohkpmld6ix" path="res://Environment/models/vechicles/Whole/mesh/van.glb" id="2_41bp7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nkuvy"]
+resource_local_to_scene = true
+size = Vector3(1.40234, 1.41797, 2.85254)
+
+[node name="Debris-Van" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="ShieldAttachment" parent="." instance=ExtResource("1_8ytau")]
+mass = 60.0
+minMassReq = 30.0
+
+[node name="CollisionShape3D" parent="ShieldAttachment" index="0"]
+shape = SubResource("BoxShape3D_nkuvy")
+
+[node name="van" parent="ShieldAttachment/CollisionShape3D" index="0" instance=ExtResource("2_41bp7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.699485, 0)
+
+[node name="wheel-back-left" parent="ShieldAttachment/CollisionShape3D/van" index="1"]
+visible = false
+
+[node name="wheel-back-right" parent="ShieldAttachment/CollisionShape3D/van" index="2"]
+visible = false
+
+[node name="wheel-front-left" parent="ShieldAttachment/CollisionShape3D/van" index="3"]
+visible = false
+
+[node name="wheel-front-right" parent="ShieldAttachment/CollisionShape3D/van" index="4"]
+visible = false
+
+[node name="MeshInstance3D" parent="ShieldAttachment/CollisionShape3D" index="1"]
+visible = false
+
+[node name="CollisionShape3D" parent="ShieldAttachment/CollisionShape3D/Area3D" index="0"]
+shape = SubResource("BoxShape3D_nkuvy")
+
+[editable path="ShieldAttachment"]
+[editable path="ShieldAttachment/CollisionShape3D/van"]

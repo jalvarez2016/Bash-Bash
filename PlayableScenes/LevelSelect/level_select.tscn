@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d3sfhy11bng7b"]
+[gd_scene load_steps=29 format=3 uid="uid://d3sfhy11bng7b"]
 
 [ext_resource type="Script" uid="uid://bag8lclxqxnf4" path="res://PlayableScenes/LevelSelect/level.gd" id="1_6yoru"]
 [ext_resource type="Script" uid="uid://cl0qycakmt6rh" path="res://PlayableScenes/LevelSelect/level_select.gd" id="1_mcag0"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cddor7bdb3r1j" path="res://Environment/models/rocks/rock_2.tscn" id="9_hnipo"]
 [ext_resource type="PackedScene" uid="uid://2meph8vbsqxs" path="res://Environment/models/rocks/rock_1.tscn" id="10_65v6v"]
 [ext_resource type="PackedScene" uid="uid://comhbig4saahp" path="res://Environment/models/rocks/rock_3.tscn" id="11_cavmy"]
+[ext_resource type="PackedScene" uid="uid://dplcifednfwwb" path="res://Environment/models/straight_grass/straight_grass.tscn" id="12_cavmy"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mcag0"]
 size = Vector2(800, 800)
@@ -394,6 +395,9 @@ transform = Transform3D(0.643629, 0, -0.765337, 0, 1, 0, 0.765337, 0, 0.643629, 
 
 [node name="Grass48" parent="GrassGroup" instance=ExtResource("8_wmfpg")]
 transform = Transform3D(0.643629, 0, -0.765337, 0, 1, 0, 0.765337, 0, 0.643629, -39.6083, 0.0769644, -19.9204)
+
+[node name="StraightGrass" parent="GrassGroup" instance=ExtResource("12_cavmy")]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, -49.6422, 0.293, -20.7338)
 
 [node name="RockGroup" type="Node3D" parent="."]
 
