@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://xiosm2itdcaj"]
+
+[ext_resource type="PackedScene" uid="uid://6614agfkyt2e" path="res://Environment/Attachments/base.tscn" id="1_r6ojb"]
+[ext_resource type="PackedScene" uid="uid://k7ejfwp6ogdh" path="res://Environment/models/vechicles/Debri/mesh/cone-flat.glb" id="2_766wg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r6ojb"]
+resource_local_to_scene = true
+size = Vector3(0.528052, 0.341309, 0.555664)
+
+[node name="Cone" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="ShieldAttachment" parent="." instance=ExtResource("1_r6ojb")]
+
+[node name="CollisionShape3D" parent="ShieldAttachment" index="0"]
+shape = SubResource("BoxShape3D_r6ojb")
+
+[node name="cone-flat2" parent="ShieldAttachment/CollisionShape3D" index="0" instance=ExtResource("2_766wg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.141005, 0)
+
+[node name="MeshInstance3D" parent="ShieldAttachment/CollisionShape3D" index="1"]
+visible = false
+
+[node name="CollisionShape3D" parent="ShieldAttachment/CollisionShape3D/Area3D" index="0"]
+shape = SubResource("BoxShape3D_r6ojb")
+
+[editable path="ShieldAttachment"]

@@ -1,0 +1,199 @@
+[gd_scene load_steps=25 format=3 uid="uid://b5hwnyx5t0l0t"]
+
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="1_j35k6"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_ogbmd"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_ogbmd"]
+[ext_resource type="PackedScene" uid="uid://bn0vwssjufq6q" path="res://Environment/Shared/RespawnRoom/start_room.tscn" id="4_bjk84"]
+[ext_resource type="Script" uid="uid://cu7kbubnlg4u6" path="res://PlayableScenes/TitleScreen/menuController.gd" id="4_jpuxo"]
+[ext_resource type="Script" uid="uid://b03o1emvhjmid" path="res://PlayableScenes/TitleScreen/quit.gd" id="5_viias"]
+[ext_resource type="Script" uid="uid://bt5f3e7jvca3l" path="res://PlayableScenes/TitleScreen/transitionScenes.gd" id="6_u8mjm"]
+[ext_resource type="PackedScene" uid="uid://b118ae6eenfte" path="res://Player/UI/Player.glb" id="7_e7nb2"]
+[ext_resource type="PackedScene" uid="uid://2meph8vbsqxs" path="res://Environment/models/rocks/rock_1.tscn" id="9_8fr4t"]
+[ext_resource type="PackedScene" uid="uid://cddor7bdb3r1j" path="res://Environment/models/rocks/rock_2.tscn" id="10_mcrc2"]
+[ext_resource type="PackedScene" uid="uid://cul4snk3hnjeh" path="res://Environment/models/grass/custom_colored_grass.tscn" id="11_mcrc2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xefje"]
+sky_top_color = Color(0.787018, 0.601241, 0.631682, 1)
+sky_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
+sky_curve = 0.599999
+ground_bottom_color = Color(0.0938589, 0.0735825, 0.371181, 1)
+ground_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
+sun_angle_max = 8.0
+sun_curve = 5.32593
+
+[sub_resource type="Sky" id="Sky_e7nb2"]
+sky_material = SubResource("ProceduralSkyMaterial_xefje")
+
+[sub_resource type="Environment" id="Environment_j35k6"]
+background_mode = 2
+sky = SubResource("Sky_e7nb2")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_bjk84"]
+script = ExtResource("2_ogbmd")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_jpuxo"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7nb2"]
+shading_mode = 0
+albedo_color = Color(1, 0.447059, 0.32549, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s4uoo"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fr4t"]
+shading_mode = 0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jpuxo"]
+emission_shape = 3
+emission_box_extents = Vector3(5.41, 1, 3.085)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_viias"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_u8mjm"]
+material = SubResource("StandardMaterial3D_viias")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_viias"]
+size = Vector3(1, 6, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8mjm"]
+albedo_color = Color(0.921569, 0.803922, 0.690196, 1)
+
+[node name="TitleScreen" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j35k6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433017, 0.250001, -0.452451, 0.891488, -0.0232146, -0.21282, -0.133218, -0.967967, 0, 0, 0)
+light_color = Color(1, 0.721569, 0.160784, 1)
+shadow_enabled = true
+
+[node name="PhantomCamera3D" type="Node3D" parent="."]
+transform = Transform3D(0.981309, -0.0498062, -0.185879, -0.0118988, 0.948373, -0.316933, 0.192068, 0.313221, 0.930055, -2.07775, 1.46824, 2.69329)
+script = ExtResource("1_j35k6")
+tween_resource = SubResource("Resource_bjk84")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_jpuxo")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.981309, -0.0498062, -0.185879, -0.0118988, 0.948373, -0.316933, 0.192068, 0.313221, 0.930055, -2.07775, 1.46824, 2.69329)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("3_ogbmd")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="Menu" type="Node3D" parent="." node_paths=PackedStringArray("menuBtns")]
+transform = Transform3D(0.989247, -0.0272576, -0.143693, 0, 0.98248, -0.18637, 0.146256, 0.184366, 0.971915, 1.85325, 0.608078, -0.720912)
+script = ExtResource("4_jpuxo")
+menuBtns = [NodePath("Label3D/Play"), NodePath("Label3D/Tutorial"), NodePath("Label3D/Quit")]
+
+[node name="Label3D" type="Label3D" parent="Menu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.46053, 1.61076, 0)
+modulate = Color(1, 0.717647, 0.419608, 1)
+outline_modulate = Color(0.462745, 0, 0, 1)
+text = "BASH-BASH"
+font_size = 64
+
+[node name="Quit" type="Label3D" parent="Menu/Label3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832512, -0.560443, 0.283319)
+text = "QUIT"
+script = ExtResource("5_viias")
+
+[node name="Tutorial" type="Label3D" parent="Menu/Label3D" node_paths=PackedStringArray("titleScreen")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.167491, -0.560443, 0.283319)
+text = "TUTORIAL
+"
+script = ExtResource("6_u8mjm")
+titleScreen = NodePath("../../..")
+nextScene = "res://PlayableScenes/Testing.tscn"
+
+[node name="Play" type="Label3D" parent="Menu/Label3D" node_paths=PackedStringArray("titleScreen")]
+transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, -1.16749, -0.560443, 0.283319)
+text = "PLAY"
+script = ExtResource("6_u8mjm")
+titleScreen = NodePath("../../..")
+nextScene = "res://PlayableScenes/LevelSelect/level_select.tscn"
+
+[node name="Player" parent="Menu/Label3D" instance=ExtResource("7_e7nb2")]
+transform = Transform3D(0.130202, -0.00980148, -0.213194, 0.0914883, 0.228189, 0.0453829, 0.192815, -0.101655, 0.122429, -2.37461, -1.11469, 0.039134)
+
+[node name="Sphere" parent="Menu/Label3D/Player" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_e7nb2")
+surface_material_override/1 = SubResource("StandardMaterial3D_s4uoo")
+surface_material_override/2 = SubResource("StandardMaterial3D_8fr4t")
+
+[node name="StartRoom" parent="." instance=ExtResource("4_bjk84")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.413, 0.295, 0.406)
+
+[node name="Snow" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.924032, 6.67726, -5.09794)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_jpuxo")
+draw_pass_1 = SubResource("SphereMesh_u8mjm")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.35394, 1, 0.641212)
+mesh = SubResource("BoxMesh_viias")
+surface_material_override/0 = SubResource("StandardMaterial3D_u8mjm")
+
+[node name="GrassGroup" type="Node3D" parent="."]
+
+[node name="Grass" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.88979, 0, -25.2372)
+
+[node name="Grass2" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.19017, 9.53674e-07, -21.0421)
+
+[node name="Grass3" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.834973, 0, 0.550291, 0, 1, 0, -0.550291, 0, 0.834973, -3.82763, 0, -26.9174)
+
+[node name="Grass4" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.834973, 0, 0.550291, 0, 1, 0, -0.550291, 0, 0.834973, -0.099974, 9.53674e-07, -24.3499)
+
+[node name="Grass5" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.979045, 0, 0.203642, 0, 1, 0, -0.203642, 0, 0.979045, -1.82966, 0, -21.4857)
+
+[node name="Grass6" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.979045, 0, 0.203642, 0, 1, 0, -0.203642, 0, 0.979045, 0.688636, 9.53674e-07, -17.7246)
+
+[node name="Grass7" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.948185, 0, 0.317718, 0, 1, 0, -0.317718, 0, 0.948185, -11.1404, 0, -12.5628)
+
+[node name="Grass8" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.948185, 0, 0.317718, 0, 1, 0, -0.317718, 0, 0.948185, -8.196, 9.53674e-07, -9.12503)
+
+[node name="Grass9" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.616871, 0, 0.787064, 0, 1, 0, -0.787064, 0, 0.616871, -8.77078, 0, -15.1289)
+
+[node name="Grass10" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.616871, 0, 0.787064, 0, 1, 0, -0.787064, 0, 0.616871, -4.42053, 9.53674e-07, -13.8788)
+
+[node name="Grass11" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.863616, 0, 0.504151, 0, 1, 0, -0.504151, 0, 0.863616, -5.15056, 0, -10.6134)
+
+[node name="Grass12" parent="GrassGroup" instance=ExtResource("11_mcrc2")]
+transform = Transform3D(0.863616, 0, 0.504151, 0, 1, 0, -0.504151, 0, 0.863616, -1.56779, 9.53674e-07, -7.84726)
+
+[node name="RockGroup" type="Node3D" parent="."]
+
+[node name="Rock1" parent="RockGroup" instance=ExtResource("9_8fr4t")]
+transform = Transform3D(10.59, 0, 0, 0, 10.59, 0, 0, 0, 10.59, -44.8363, 9.53674e-07, -55.8567)
+
+[node name="Rock2" parent="RockGroup" instance=ExtResource("10_mcrc2")]
+transform = Transform3D(8, 0, 0, 0, 10, 0, 0, 0, 8, -33.5432, 0, -80.9657)
+
+[editable path="Menu/Label3D/Player"]

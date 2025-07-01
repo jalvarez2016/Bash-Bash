@@ -1,0 +1,81 @@
+[gd_scene load_steps=15 format=3 uid="uid://do072n4h5amsx"]
+
+[ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_6lxfv"]
+[ext_resource type="Script" uid="uid://cbh5qff235tu2" path="res://PlayableScenes/LevelSelect/Level 1/level_manager.gd" id="1_c1h1p"]
+[ext_resource type="PackedScene" uid="uid://cddor7bdb3r1j" path="res://Environment/models/rocks/rock_2.tscn" id="3_qyim5"]
+[ext_resource type="PackedScene" uid="uid://comhbig4saahp" path="res://Environment/models/rocks/rock_3.tscn" id="4_xm7fk"]
+[ext_resource type="PackedScene" uid="uid://2meph8vbsqxs" path="res://Environment/models/rocks/rock_1.tscn" id="5_t8udh"]
+[ext_resource type="PackedScene" uid="uid://y6xupd6errs5" path="res://Environment/models/forest/game_object/debris_pebble.tscn" id="6_xm7fk"]
+[ext_resource type="PackedScene" uid="uid://fi4jn01bpboq" path="res://Environment/models/vechicles/Debri/game_object/debris_bumber.tscn" id="7_iu06s"]
+[ext_resource type="PackedScene" uid="uid://d0ql0x2f5ska8" path="res://Environment/models/forest/game_object/debris_can.tscn" id="7_uksie"]
+[ext_resource type="PackedScene" uid="uid://dmccplpf1w5cv" path="res://Environment/models/forest/game_object/debris_branch.tscn" id="9_iu06s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6lxfv"]
+sky_top_color = Color(0.787018, 0.601241, 0.631682, 1)
+sky_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
+sky_curve = 0.599999
+ground_bottom_color = Color(0.0938589, 0.0735825, 0.371181, 1)
+ground_horizon_color = Color(0.913725, 0.545098, 0.447059, 1)
+sun_angle_max = 8.0
+sun_curve = 5.32593
+
+[sub_resource type="Sky" id="Sky_e7nb2"]
+sky_material = SubResource("ProceduralSkyMaterial_6lxfv")
+
+[sub_resource type="Environment" id="Environment_c1h1p"]
+background_mode = 2
+sky = SubResource("Sky_e7nb2")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_c1h1p"]
+size = Vector2(800, 800)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6lxfv"]
+data = PackedVector3Array(400, 0, 400, -400, 0, 400, 400, 0, -400, -400, 0, 400, -400, 0, -400, 400, 0, -400)
+
+[node name="Level1" type="Node3D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_c1h1p")
+player = NodePath("Player")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c1h1p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433017, 0.250001, -0.452451, 0.891487, -0.0232152, -0.21282, -0.133218, -0.967967, 0, 0, 0)
+light_color = Color(1, 0.721569, 0.160784, 1)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_6lxfv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_c1h1p")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_6lxfv")
+
+[node name="Rocks" type="Node3D" parent="."]
+
+[node name="Rock2" parent="Rocks" instance=ExtResource("3_qyim5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6817, 0.064, -5.25094)
+
+[node name="Rock3" parent="Rocks" instance=ExtResource("4_xm7fk")]
+transform = Transform3D(1.78534, 0, -0.901412, 0, 1, 0, 0.901412, 0, 1.78534, -2.86706, 0.064, -3.24552)
+
+[node name="Rock1" parent="Rocks" instance=ExtResource("5_t8udh")]
+transform = Transform3D(-0.208082, 0, 0.978111, 0, 1, 0, -0.978111, 0, -0.208082, -8.23589, 0.0639991, -4.99356)
+
+[node name="Debris-Pebble" parent="." instance=ExtResource("6_xm7fk")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 7.10907, 1.20849, -4.58586)
+
+[node name="Debris-Can" parent="." instance=ExtResource("7_uksie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08331, 0.265869, 2.50611)
+
+[node name="Debris-Bumber" parent="." instance=ExtResource("7_iu06s")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.743476, 1.42401, 6.37205)
+
+[node name="Debris-Branch" parent="." instance=ExtResource("9_iu06s")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -1.19125, 2.79901, -17.4414)

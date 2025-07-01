@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cul4snk3hnjeh"]
+
+[ext_resource type="PackedScene" uid="uid://cfmraecehyodv" path="res://Environment/models/grass/Grass.glb" id="1_7djd8"]
+[ext_resource type="Material" uid="uid://batjcqlxhfu6" path="res://Environment/models/grass/greengrass.tres" id="2_ehb4d"]
+[ext_resource type="Script" uid="uid://sdva2iolvy5g" path="res://Environment/models/grass/colorGrass.gd" id="2_mcvtt"]
+
+[node name="Grass" instance=ExtResource("1_7djd8")]
+script = ExtResource("2_mcvtt")
+color = ExtResource("2_ehb4d")
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_ehb4d")
+
+[node name="Cube_001" parent="." index="1"]
+surface_material_override/0 = ExtResource("2_ehb4d")
+
+[node name="Cube_003" parent="." index="3"]
+surface_material_override/0 = ExtResource("2_ehb4d")
+
+[node name="Cube_004" parent="." index="4"]
+surface_material_override/0 = ExtResource("2_ehb4d")
+
+[node name="Cube_005" parent="." index="5"]
+surface_material_override/0 = ExtResource("2_ehb4d")
+
+[node name="Cube_029" parent="." index="29"]
+surface_material_override/0 = ExtResource("2_ehb4d")

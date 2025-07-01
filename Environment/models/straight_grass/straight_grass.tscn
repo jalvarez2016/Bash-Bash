@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://dplcifednfwwb"]
+
+[ext_resource type="PackedScene" uid="uid://ckd8wg4u3qtq2" path="res://Environment/models/straight_grass/StraightGrass.glb" id="1_drycx"]
+[ext_resource type="Script" uid="uid://sdva2iolvy5g" path="res://Environment/models/grass/colorGrass.gd" id="2_72ixm"]
+[ext_resource type="Material" uid="uid://batjcqlxhfu6" path="res://Environment/models/grass/greengrass.tres" id="3_40afv"]
+
+[node name="StraightGrass" instance=ExtResource("1_drycx")]
+script = ExtResource("2_72ixm")
+color = ExtResource("3_40afv")

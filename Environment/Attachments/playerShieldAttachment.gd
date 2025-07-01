@@ -25,7 +25,7 @@ func _on_area_3d_body_shape_entered(_body_rid: RID, body: Node3D, _body_shape_in
 			return
 		var playerMass = playerShieldManager.playerBody.mass
 		# Check if player is big enough to add attach piece
-		if (playerMass / 2) < body.mass:
+		if playerMass < body.minMassReq:
 			return
 		var shieldAttachment: Node3D = body.collider
 		shieldAttachment.reparent(playerShieldManager.playerBody, true)

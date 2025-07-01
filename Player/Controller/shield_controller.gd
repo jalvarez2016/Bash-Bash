@@ -11,7 +11,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		if !body.canAttach:
 			return
 		if playerBody.mass < body.minMassReq:
-			print('too big to pick up', playerBody.mass / 2, body.mass)
+			print('too big to pick up', playerBody.mass, body.minMassReq)
 			return
 		var shieldAttachment: Node3D = body.collider
 		var addedMass : float = shieldAttachment.mass

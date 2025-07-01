@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bm2xrxvxaqw0e"]
+
+[ext_resource type="PackedScene" uid="uid://6614agfkyt2e" path="res://Environment/Attachments/base.tscn" id="1_inpsf"]
+[ext_resource type="PackedScene" uid="uid://b7bgoy0iq02fa" path="res://Environment/models/vechicles/Debri/mesh/wheel-dark.glb" id="2_6dkbw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_38vm1"]
+resource_local_to_scene = true
+size = Vector3(0.488037, 0.676758, 0.644531)
+
+[node name="Wheel" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="ShieldAttachment" parent="." instance=ExtResource("1_inpsf")]
+mass = 4.0
+minMassReq = 2.0
+
+[node name="CollisionShape3D" parent="ShieldAttachment" index="0"]
+shape = SubResource("BoxShape3D_38vm1")
+
+[node name="wheel-dark2" parent="ShieldAttachment/CollisionShape3D" index="0" instance=ExtResource("2_6dkbw")]
+
+[node name="MeshInstance3D" parent="ShieldAttachment/CollisionShape3D" index="1"]
+visible = false
+
+[node name="CollisionShape3D" parent="ShieldAttachment/CollisionShape3D/Area3D" index="0"]
+shape = SubResource("BoxShape3D_38vm1")
+
+[editable path="ShieldAttachment"]
