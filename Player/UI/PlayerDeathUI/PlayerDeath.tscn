@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://dtwttf1onfgvm"]
+
+[ext_resource type="Script" uid="uid://dh2b10gkxk1cb" path="res://Player/UI/PlayerDeathUI/player_death_controller.gd" id="1_aamn4"]
+[ext_resource type="Script" uid="uid://dp23uo8re0nms" path="res://Player/UI/PlayerDeathUI/restart.gd" id="2_oytve"]
+[ext_resource type="Script" uid="uid://bw6n58w668ord" path="res://Player/UI/PlayerDeathUI/quit.gd" id="3_8wl7x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1quo6"]
+resource_local_to_scene = true
+font_size = 48
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xh4xm"]
+resource_local_to_scene = true
+font_size = 18
+
+[sub_resource type="LabelSettings" id="LabelSettings_we30q"]
+resource_local_to_scene = true
+font_size = 18
+
+[node name="PlayerDeath" type="Control" node_paths=PackedStringArray("options")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aamn4")
+options = [NodePath("Panel/VBoxContainer/Options/Restart"), NodePath("Panel/VBoxContainer/Options/Quit")]
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.5
+offset_top = -20.0
+offset_right = 113.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_1quo6")
+horizontal_alignment = 1
+
+[node name="Options" type="VBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Restart" type="Label" parent="Panel/VBoxContainer/Options" node_paths=PackedStringArray("ui_main")]
+layout_mode = 2
+text = "Try Again"
+label_settings = SubResource("LabelSettings_xh4xm")
+horizontal_alignment = 1
+script = ExtResource("2_oytve")
+ui_main = NodePath("../../../..")
+
+[node name="Quit" type="Label" parent="Panel/VBoxContainer/Options" node_paths=PackedStringArray("death_ui_controller")]
+layout_mode = 2
+text = "Quit"
+label_settings = SubResource("LabelSettings_we30q")
+horizontal_alignment = 1
+script = ExtResource("3_8wl7x")
+level_scene = "C:/Users/jason/Dev/bash-and-mash/PlayableScenes/LevelSelect/level_select.tscn"
+death_ui_controller = NodePath("../../../..")

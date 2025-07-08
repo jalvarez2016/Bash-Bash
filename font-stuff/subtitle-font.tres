@@ -1,0 +1,5 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dqt5qh6q4duwu"]
+
+[resource]
+resource_local_to_scene = true
+font_size = 18

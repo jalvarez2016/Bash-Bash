@@ -1,4 +1,6 @@
 extends RigidBody3D
+var death_ui = preload("res://Player/UI/PlayerDeathUI/PlayerDeath.tscn")
+
 @export var healthManager: Node3D
 @export var spring_arm: SpringArm3D
 @export var playerMain: Node3D
@@ -18,13 +20,20 @@ var playerStates = {
 var state: String = playerStates.MOVING
 var speed: float = 10
 var strength: int = 5
+var isAlive: bool = true
+var hesAlreadyDead: bool = false
 
 func _ready() -> void:
 	cameraRotation = spring_arm
 
 func _process(delta: float) -> void:
-	movement(delta)
-	launch(delta)
+	if isAlive:
+		movement(delta)
+		launch(delta)
+	elif !isAlive && !hesAlreadyDead:
+		var deathUIInstance = death_ui.instantiate()
+		get_tree().root.add_child(deathUIInstance)
+		hesAlreadyDead = true
 	pass
 
 func movement(_delta: float) -> void:

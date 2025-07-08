@@ -130,9 +130,10 @@ max_value = 80.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="HealthManager" type="Node3D" parent="." node_paths=PackedStringArray("healthBar")]
+[node name="HealthManager" type="Node3D" parent="." node_paths=PackedStringArray("healthBar", "playerMain")]
 script = ExtResource("5_xya77")
 healthBar = NodePath("HealthBar")
+playerMain = NodePath("../RigidBody3D")
 
 [node name="HealthBar" type="ProgressBar" parent="HealthManager"]
 offset_left = 40.0
