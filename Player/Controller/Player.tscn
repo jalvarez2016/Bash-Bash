@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://clh46a28l5d6f"]
+[gd_scene load_steps=23 format=3 uid="uid://clh46a28l5d6f"]
 
 [ext_resource type="Script" uid="uid://dkr261g6uqrfr" path="res://Player/Controller/player.gd" id="1_4a7vj"]
 [ext_resource type="Script" uid="uid://cfgp2qshfegwg" path="res://Player/Controller/player_manager.gd" id="1_vq2sl"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cai7xtthcnai2" path="res://Player/Controller/healthManager.gd" id="5_xya77"]
 [ext_resource type="PackedScene" uid="uid://dvw0tposbwj3y" path="res://Player/UI/main.tscn" id="6_5vfx0"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="10_f67yr"]
+[ext_resource type="Script" uid="uid://16d1n6gk7smo" path="res://Environment/Shared/objectives/time_elapsed.gd" id="12_wrhk5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qx07r"]
 
@@ -41,6 +42,11 @@ ease = 2
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7h38"]
 shading_mode = 0
 albedo_color = Color(0.933242, 0, 0.0206011, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_t2kon"]
+font_size = 32
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="Node3D" node_paths=PackedStringArray("player_camera")]
 script = ExtResource("1_vq2sl")
@@ -146,7 +152,7 @@ value = 100.0
 script = ExtResource("2_pyy65")
 playerBody = NodePath("../RigidBody3D")
 
-[node name="Control" parent="." instance=ExtResource("6_5vfx0")]
+[node name="Controls" parent="." instance=ExtResource("6_5vfx0")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -156,6 +162,27 @@ process_priority = 300
 process_physics_priority = 300
 script = ExtResource("10_f67yr")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TimeElapsed" type="Label" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.5
+offset_right = 63.5
+offset_bottom = 45.0
+grow_horizontal = 2
+text = "00:00:00"
+label_settings = SubResource("LabelSettings_t2kon")
+horizontal_alignment = 1
+script = ExtResource("12_wrhk5")
 
 [connection signal="body_shape_entered" from="RigidBody3D" to="RigidBody3D" method="_on_body_shape_entered"]
 [connection signal="body_entered" from="RigidBody3D/Area3D" to="ShieldController" method="_on_area_3d_body_entered"]
