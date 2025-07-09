@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cnu00jud85ouo"]
+[gd_scene load_steps=17 format=3 uid="uid://cnu00jud85ouo"]
 
 [ext_resource type="Script" uid="uid://cldwudaw2411s" path="res://PlayableScenes/WorldManager.gd" id="1_pd50j"]
 [ext_resource type="PackedScene" uid="uid://clh46a28l5d6f" path="res://Player/Controller/Player.tscn" id="1_xnys2"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dbrq67ppjp311" path="res://Environment/Randomizers/random_item_spawner.tscn" id="5_iutbq"]
 [ext_resource type="PackedScene" uid="uid://bt8twimc6ami0" path="res://Enemy/Enemies/Eyeball/eyeball_enemy.tscn" id="5_pd50j"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_hdvt3"]
+[ext_resource type="PackedScene" uid="uid://bpqjnkx1mj8x0" path="res://Environment/Shared/objectives/finish_line.tscn" id="8_hdvt3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_34qg5"]
 sky_top_color = Color(0.619608, 0.356863, 0.54902, 1)
@@ -21,6 +22,11 @@ background_mode = 2
 sky = SubResource("Sky_xnys2")
 tonemap_mode = 2
 glow_enabled = true
+fog_light_energy = 5.8
+volumetric_fog_density = 0.6133
+volumetric_fog_length = 1.76
+volumetric_fog_detail_spread = 6.0
+volumetric_fog_ambient_inject = 0.84
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_34qg5"]
 size = Vector2(100, 800)
@@ -195,6 +201,10 @@ transform = Transform3D(-3.78552e-08, 0.5, 0.866025, 2.18557e-08, 0.866025, -0.5
 script = ExtResource("5_d36j6")
 tween_resource = SubResource("Resource_unism")
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="FinishLine" parent="." node_paths=PackedStringArray("level_main") instance=ExtResource("8_hdvt3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149338, 0.274336, 242.463)
+level_main = NodePath("..")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="Movement/Area3D" to="Movement" method="_on_area_entered"]
