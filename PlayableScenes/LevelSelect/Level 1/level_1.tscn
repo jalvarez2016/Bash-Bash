@@ -46,8 +46,9 @@ transform = Transform3D(-0.866023, -0.433017, 0.250001, -0.452451, 0.891487, -0.
 light_color = Color(1, 0.721569, 0.160784, 1)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_6lxfv")]
+[node name="Player" parent="." node_paths=PackedStringArray("current_level") instance=ExtResource("1_6lxfv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+current_level = NodePath("..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_c1h1p")

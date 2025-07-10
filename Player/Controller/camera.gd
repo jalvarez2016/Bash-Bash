@@ -20,9 +20,11 @@ func _unhandled_input(event: InputEvent):
 func _process(_delta):
 	if Input.is_action_pressed("mouse_release"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		active = false
+		if !playerBody.isPaused:
+			active = false
 	elif Input.is_action_just_released("mouse_release"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		active = true
+		if !playerBody.isPaused:
+			active = true
 	if playerBody:
 		global_position = playerBody.global_position

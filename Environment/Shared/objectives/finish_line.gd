@@ -14,7 +14,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			var loading_instance = loadingScene.instantiate()
 			loading_instance.next_scene = level_scene
 			get_tree().root.add_child(loading_instance)
-		print('player finished')
+			level_main.queue_free()
 
 # TODO: hard code the level_scene to a victory screen where we display how
 # long it took the player to finish the level

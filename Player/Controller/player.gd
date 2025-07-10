@@ -22,11 +22,20 @@ var speed: float = 10
 var strength: int = 5
 var isAlive: bool = true
 var hesAlreadyDead: bool = false
+var isPaused: bool = false
 
 func _ready() -> void:
 	cameraRotation = spring_arm
 
+func _check_pause() -> void:
+	if Input.is_action_just_pressed("quit"):
+		isPaused = !isPaused
+		spring_arm.active = !spring_arm.active
+
 func _process(delta: float) -> void:
+	_check_pause()
+	if isPaused:
+		return
 	if isAlive:
 		movement(delta)
 		launch(delta)

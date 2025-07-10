@@ -1,8 +1,11 @@
 extends Label
 
 var time_elapsed: float = 0.0
+var isActive: bool = true
 
 func _process(delta: float) -> void:
+	if !isActive:
+		return
 	time_elapsed += delta
 	text = _format_seconds(time_elapsed, true)
 	
