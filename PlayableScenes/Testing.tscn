@@ -204,10 +204,11 @@ script = ExtResource("5_d36j6")
 tween_resource = SubResource("Resource_unism")
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
-[node name="FinishLine" parent="." node_paths=PackedStringArray("level_main") instance=ExtResource("8_hdvt3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149338, 0.274336, -169.537)
+[node name="FinishLine" parent="." node_paths=PackedStringArray("level_main", "player_body") instance=ExtResource("8_hdvt3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149338, 0.274336, -173.339)
 level_scene = "C:/Users/jason/Dev/bash-and-mash/PlayableScenes/TitleScreen/title_screen.tscn"
 level_main = NodePath("..")
+player_body = NodePath("../Player")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="Movement/Area3D" to="Movement" method="_on_area_entered"]

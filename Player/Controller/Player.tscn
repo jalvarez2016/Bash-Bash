@@ -62,9 +62,10 @@ font_size = 18
 resource_local_to_scene = true
 font_size = 18
 
-[node name="Player" type="Node3D" node_paths=PackedStringArray("player_camera")]
+[node name="Player" type="Node3D" node_paths=PackedStringArray("player_camera", "elapsed_time_ref")]
 script = ExtResource("1_vq2sl")
 player_camera = NodePath("SpringArm3D/CameraHolder/PhantomCamera3D")
+elapsed_time_ref = NodePath("PauseMenu/VBoxContainer/TimeElapsed")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." node_paths=PackedStringArray("healthManager", "spring_arm", "playerMain", "chargeUI", "launchTarget", "shieldController") groups=["player"]]
 collision_layer = 2

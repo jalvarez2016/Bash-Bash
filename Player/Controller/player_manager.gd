@@ -6,6 +6,8 @@ extends Node3D
 ## The current level root node that will be removed if the player quits the level.
 ## This is also used to know which level to reload on restart in the pause menu
 @export var current_level: Node3D
+## For easy access for other nodes, like passing it to the victory screen
+@export var elapsed_time_ref: Label
 
 func set_camera() -> void:
 	player_camera.set_priority(20)

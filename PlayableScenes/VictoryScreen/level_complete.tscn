@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://jihudfi2s077"]
+
+[ext_resource type="Script" uid="uid://beuj4hjf107mg" path="res://PlayableScenes/VictoryScreen/level_completed.gd" id="1_ll8hs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lclea"]
+bg_color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ll8hs"]
+font_size = 64
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_g6p18"]
+font_size = 32
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jvldx"]
+font_size = 32
+font_color = Color(1, 0.482, 0.208, 1)
+
+[node name="Level Complete" type="Control" node_paths=PackedStringArray("time_elapsed_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ll8hs")
+time_elapsed_label = NodePath("Panel/VBoxContainer/TimeElapsed")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lclea")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.5
+offset_top = -44.0
+offset_right = 148.5
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Level
+Complete"
+label_settings = SubResource("LabelSettings_ll8hs")
+horizontal_alignment = 1
+
+[node name="TimeElapsed" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Time Elapsed"
+label_settings = SubResource("LabelSettings_g6p18")
+horizontal_alignment = 1
+
+[node name="---" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Continue" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+label_settings = SubResource("LabelSettings_jvldx")
+horizontal_alignment = 1
