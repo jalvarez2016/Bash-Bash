@@ -18,7 +18,13 @@ func _unhandled_input(event: InputEvent):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_pressed("quit"):
-		get_tree().quit()
+	if Input.is_action_pressed("mouse_release"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		if !playerBody.isPaused:
+			active = false
+	elif Input.is_action_just_released("mouse_release"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if !playerBody.isPaused:
+			active = true
 	if playerBody:
 		global_position = playerBody.global_position

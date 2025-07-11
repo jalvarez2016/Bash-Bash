@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cgvwaqxlxoruh" path="res://Player/UI/playerControls.gd" id="1_h01ay"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("keysContainer")]
+[node name="Controls" type="Control" node_paths=PackedStringArray("keysContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

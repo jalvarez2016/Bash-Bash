@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpqjnkx1mj8x0"]
+
+[ext_resource type="Script" uid="uid://dy5luh3e10m7e" path="res://Environment/Shared/objectives/finish_line.gd" id="1_4w7rs"]
+[ext_resource type="Shader" uid="uid://dwtpuwrjhpheu" path="res://Environment/Shared/objectives/marker.gdshader" id="1_lvuq6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c2htr"]
+radius = 20.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4w7rs"]
+size = Vector2(40, 40)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hf6e7"]
+render_priority = 0
+shader = ExtResource("1_lvuq6")
+shader_parameter/color = Color(1.97336e-06, 0.768317, 0.381971, 1)
+shader_parameter/color_intensity = 1000.0
+shader_parameter/transparency_level = 10.0
+shader_parameter/speed = 6.0
+shader_parameter/zoom_amplitude = 0.3
+
+[node name="FinishLine" type="Node3D"]
+script = ExtResource("1_4w7rs")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_c2htr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("PlaneMesh_4w7rs")
+surface_material_override/0 = SubResource("ShaderMaterial_hf6e7")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
