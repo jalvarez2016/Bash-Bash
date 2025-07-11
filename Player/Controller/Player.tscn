@@ -179,6 +179,7 @@ script = ExtResource("10_f67yr")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("options", "time_elapsed")]
+process_mode = 3
 visible = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 3
